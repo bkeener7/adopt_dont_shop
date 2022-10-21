@@ -9,7 +9,7 @@ RSpec.describe 'application' do
         applicant = Applicant.create!(name: "Tom Jones", address: "123 Main St", city: "Denver", state: "Colorado", zipcode: 80202, description: "I love dogs!")
         application = Application.create!(status: "In Progress", applicant_id: applicant.id, pet_id: pet_1.id)
         
-        visit "/applications/#{applications.id}
+        visit "/applications/#{applications.id}"
         expect(page).to have_content('Tom Jones')
     end
 end
