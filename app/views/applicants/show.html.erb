@@ -9,3 +9,5 @@
 <% @applicant.pets.each do |pet| %>
   <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
 <% end %>
+
+<h3>Application Status: </h3> <p><%= @applicant.status %></p>
