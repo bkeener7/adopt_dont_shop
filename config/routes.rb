@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # pet applications
   get '/pet_applications/:id', to: 'pet_applications#show'
 
+  # applicants
+  get '/applicants/:id', to: 'applicants#show'
+
   # shelters
   get '/shelters', to: 'shelters#index'
   get '/shelters/new', to: 'shelters#new'
