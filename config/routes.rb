@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
+  # opening page
   get '/', to: 'application#welcome'
 
+  # pet applications
+  # get '/pet_applications/:id', to: 'pet_applications#show'
+
+  # applicants
+  get '/applicants/new', to: 'applicants#new'
+  get '/applicants/:id', to: 'applicants#show'
+  post '/applicants', to: 'applicants#create'
+
+  # shelters
   get '/shelters', to: 'shelters#index'
   get '/shelters/new', to: 'shelters#new'
   get '/shelters/:id', to: 'shelters#show'
@@ -9,12 +19,14 @@ Rails.application.routes.draw do
   patch '/shelters/:id', to: 'shelters#update'
   delete '/shelters/:id', to: 'shelters#destroy'
 
+  # pets
   get '/pets', to: 'pets#index'
   get '/pets/:id', to: 'pets#show'
   get '/pets/:id/edit', to: 'pets#edit'
   patch '/pets/:id', to: 'pets#update'
   delete '/pets/:id', to: 'pets#destroy'
 
+  # veterinary offices
   get '/veterinary_offices', to: 'veterinary_offices#index'
   get '/veterinary_offices/new', to: 'veterinary_offices#new'
   get '/veterinary_offices/:id', to: 'veterinary_offices#show'
@@ -23,16 +35,19 @@ Rails.application.routes.draw do
   patch '/veterinary_offices/:id', to: 'veterinary_offices#update'
   delete '/veterinary_offices/:id', to: 'veterinary_offices#destroy'
 
+  # veterinarians
   get '/veterinarians', to: 'veterinarians#index'
   get '/veterinarians/:id', to: 'veterinarians#show'
   get '/veterinarians/:id/edit', to: 'veterinarians#edit'
   patch '/veterinarians/:id', to: 'veterinarians#update'
   delete '/veterinarians/:id', to: 'veterinarians#destroy'
 
+  # shelters
   get '/shelters/:shelter_id/pets', to: 'shelters#pets'
   get '/shelters/:shelter_id/pets/new', to: 'pets#new'
   post '/shelters/:shelter_id/pets', to: 'pets#create'
 
+  # veterinary offices and veterinarians
   get '/veterinary_offices/:veterinary_office_id/veterinarians', to: 'veterinary_offices#veterinarians'
   get '/veterinary_offices/:veterinary_office_id/veterinarians/new', to: 'veterinarians#new'
   post '/veterinary_offices/:veterinary_office_id/veterinarians', to: 'veterinarians#create'
