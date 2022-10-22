@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   get '/', to: 'application#welcome'
 
   # pet applications
-  get '/pet_applications/:id', to: 'pet_applications#show'
+  # get '/pet_applications/:id', to: 'pet_applications#show'
 
   # applicants
+  get '/applicants/new', to: 'applicants#new'
   get '/applicants/:id', to: 'applicants#show'
+  post '/applicants', to: 'applicants#create'
 
   # shelters
   get '/shelters', to: 'shelters#index'
