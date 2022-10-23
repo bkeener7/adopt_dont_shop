@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'applicants' do
 
-  before :each do
-    @shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
-    @pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: @shelter.id)
-    @pet_2 = Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter.id)
-    @pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Beethoven', shelter_id: @shelter.id)
-    @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
-    @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'Pending')
-    @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
-    @pet_application1 = PetApplication.create!(pet: @pet_1, applicant: @applicant2)
-    @pet_application2 = PetApplication.create!(pet: @pet_3, applicant: @applicant2)
-    @pet_application3 = PetApplication.create!(pet: @pet_1, applicant: @applicant3)
-  end
+  # before :each do
+  #   @shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+  #   @pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: @shelter.id)
+  #   @pet_2 = Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter.id)
+  #   @pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Beethoven', shelter_id: @shelter.id)
+  #   @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
+  #   @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'Pending')
+  #   @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
+  #   @pet_application1 = PetApplication.create!(pet: @pet_1, applicant: @applicant2)
+  #   @pet_application2 = PetApplication.create!(pet: @pet_3, applicant: @applicant2)
+  #   @pet_application3 = PetApplication.create!(pet: @pet_1, applicant: @applicant3)
+  # end
 
   describe 'applicants new page' do
     it 'has a link on the pets index page' do
@@ -50,12 +50,6 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('In Progress')
     end
     
-    # As a visitor
-    # When I visit the new application page
-    # And I fail to fill in any of the form fields
-    # And I click submit
-    # Then I am taken back to the new applications page
-    # And I see a message that I must fill in those fields.
     it 'stays on new applications page and displays message when field(s) are incomplete' do
       visit '/applicants/new'
 
@@ -65,9 +59,9 @@ RSpec.describe 'applicants' do
       fill_in('Zipcode', with: '17105') # Leading zeroes are being truncated by number_field form
 
       click_button('Submit Application')
-
+      save_and_open_page
       expect(current_path).to eq('/applicants/new')
-      expect(page).to have_content('Please complete all fields before clicking "Submit Application"')
+      expect(page).to have_content("Name can't be blank")
     end
     
   end
