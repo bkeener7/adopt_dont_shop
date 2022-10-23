@@ -1,6 +1,13 @@
 <h1>New Pet Adoption Application</h1>
 
-<% state_select = [ "", "AK - Alaska", 
+<% if !!flash[:errors] %>
+<% flash[:errors].each do |error| %>
+  <p><%= error %></p> <br>
+  <% end %>
+<% end %>
+
+<% state_select = [ "", 
+"AK - Alaska", 
 "AL - Alabama", 
 "AR - Arkansas", 
 "AS - American Samoa", 
@@ -56,7 +63,7 @@
 "WV - West Virginia", 
 "WY - Wyoming"] %>
 
-<%= form_with url: "/applicants", method: :post, local: true do |form| %>
+<%= form_with url: '/applicants', method: :post, local: true do |form| %>
   <%= form.label :name %>
   <%= form.text_field :name %><br>
   <%= form.label :address %>
