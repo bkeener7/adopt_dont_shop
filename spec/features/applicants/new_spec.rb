@@ -39,15 +39,35 @@ RSpec.describe 'applicants' do
 
       click_button('Submit Application')
 
-      # expect(current_path).to eq("/applicants/#{@new_applicant.id}") Need to figure out how to
-      # test assertion for path to show page of new applicant
+      new_applicant = Applicant.last
 
+      expect(current_path).to eq("/applicants/#{new_applicant.id}")
       expect(page).to have_content('Bruce Wayne')
       expect(page).to have_content('1007 Mountain Drive')
       expect(page).to have_content('Gotham')
       expect(page).to have_content('New Jersey')
       expect(page).to have_content('17105')
       expect(page).to have_content('In Progress')
+    end
+    
+    # As a visitor
+    # When I visit the new application page
+    # And I fail to fill in any of the form fields
+    # And I click submit
+    # Then I am taken back to the new applications page
+    # And I see a message that I must fill in those fields.
+    it 'stays on new applications page and displays message when field(s) are incomplete' do
+      visit '/applicants/new'
+
+      fill_in('Address', with: '1007 Mountain Drive')
+      fill_in('City', with: 'Gotham')
+      select('NJ - New Jersey', from: 'State')
+      fill_in('Zipcode', with: '17105') # Leading zeroes are being truncated by number_field form
+
+      click_button('Submit Application')
+
+      expect(current_path).to eq('/applicants/new')
+      expect(page).to have_content('Please complete all fields before clicking "Submit Application"')
     end
     
   end
