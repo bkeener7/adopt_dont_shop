@@ -13,13 +13,22 @@
 
 <% if @pets != nil %>
   <% @pets.each do |pet| %>
-    <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+    <p>
+      <form display = "inline-block">
+        <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+        <%= form_tag "/pet_applications/add_pet", method: :post, local: true do %>
+          <%= hidden_field_tag :pet_id, pet.id %>
+          <%= hidden_field_tag :applicant_id, @applicant.id %>
+          <%= submit_tag "Adopt #{pet.name}!" %>
+        <% end %>
+      </form>
+    </p>
   <% end %>
 <% end %>
 
 <h3>Pets I want to adopt:</h3>
 <% @applicant.pets.each do |pet| %>
-  <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+  <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p></p>
 <% end %>
 
 <h3>Application Status: </h3> <p><%= @applicant.status %></p>

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/', to: 'application#welcome'
 
   # pet applications
-  # get '/pet_applications/:id', to: 'pet_applications#show'
+  post '/pet_applications/add_pet', to: 'pet_applications#add_pet'
 
   # applicants
   get '/applicants/new', to: 'applicants#new'

@@ -22,7 +22,7 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('1007 Mountain Drive')
       expect(page).to have_content('Gotham')
       expect(page).to have_content('New Jersey')
-      expect(page).to have_content(0o7105)
+      expect(page).to have_content(07105)
       expect(page).to have_content('I love bats(and dogs)!')
 
       expect(page).to_not have_content('Diana Prince')
@@ -56,6 +56,20 @@ RSpec.describe 'applicants' do
 
       expect(current_path).to eq("/applicants/#{@applicant2.id}")
       expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+    end
+
+    it 'shows an adopt this pet button on searched pets that adds to want to adopt on application' do
+      visit "/applicants/#{@applicant2.id}"
+      fill_in('Search', with: 'Lobster')
+      click_on('Search')
+
+      expect(page).to have_button('Adopt Lobster!')
+
+      click_on('Adopt Lobster!')
+
+      expect(current_path).to eq("/applicants/#{@applicant2.id}")
+      expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+      expect('Lobster').to_not appear_before('Pets I want to adopt:')
     end
   end
 end
