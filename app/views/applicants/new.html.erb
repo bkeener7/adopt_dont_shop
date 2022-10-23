@@ -6,7 +6,8 @@
   <% end %>
 <% end %>
 
-<% state_select = [ "", "AK - Alaska", 
+<% state_select = [ "", 
+"AK - Alaska", 
 "AL - Alabama", 
 "AR - Arkansas", 
 "AS - American Samoa", 
@@ -62,7 +63,7 @@
 "WV - West Virginia", 
 "WY - Wyoming"] %>
 
-<%= form_with url: "/applicants", method: :post, local: true do |form| %>
+<%= form_with url: '/applicants', method: :post, local: true do |form| %>
   <%= form.label :name %>
   <%= form.text_field :name %><br>
   <%= form.label :address %>
