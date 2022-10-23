@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'applicants' do
-
   before :each do
     @shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
     @pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: @shelter.id)
@@ -36,14 +35,14 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('Lucille Bald')
       expect(page).to have_content('Beethoven')
 
-      expect(page).to have_link("#{@pet_1.name}", :href => "/pets/#{@pet_1.id}")
-      expect(page).to have_link("#{@pet_3.name}", :href => "/pets/#{@pet_3.id}")
+      expect(page).to have_link(@pet_1.name.to_s, href: "/pets/#{@pet_1.id}")
+      expect(page).to have_link(@pet_3.name.to_s, href: "/pets/#{@pet_3.id}")
     end
 
     it 'shows the applicants status' do
       visit "/applicants/#{@applicant2.id}"
 
-      expect(page).to have_content("Pending")
+      expect(page).to have_content('Pending')
     end
   end
 end

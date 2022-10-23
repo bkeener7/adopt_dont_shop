@@ -8,7 +8,7 @@ RSpec.describe Applicant, type: :model do
     it { should validate_presence_of :zipcode }
     it { should validate_presence_of :status }
   end
-  
+
   describe 'relationships' do
     it { should have_many :pet_applications }
     it { should have_many(:pets).through(:pet_applications) }

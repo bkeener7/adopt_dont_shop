@@ -3,8 +3,7 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.find(params[:id])
   end
 
-  def new
-  end
+  def new; end
 
   def create
     @applicant = Applicant.create(applicant_params)
@@ -12,11 +11,12 @@ class ApplicantsController < ApplicationController
       redirect_to "/applicants/#{@applicant.id}"
     else
       flash[:errors] = @applicant.errors.full_messages
-      redirect_to "/applicants/new"
+      redirect_to '/applicants/new'
     end
   end
 
   private
+
   def applicant_params
     params.permit(:name, :address, :city, :state, :zipcode, :status)
   end

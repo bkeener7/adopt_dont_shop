@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'applicants' do
-
   # before :each do
   #   @shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
   #   @pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: @shelter.id)
@@ -19,7 +18,7 @@ RSpec.describe 'applicants' do
     it 'has a link on the pets index page' do
       visit '/pets'
 
-      expect(page).to have_link("Start an Application", :href => "/applicants/new")
+      expect(page).to have_link('Start an Application', href: '/applicants/new')
     end
 
     it 'has a form to complete a new application' do
@@ -49,7 +48,7 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('17105')
       expect(page).to have_content('In Progress')
     end
-    
+
     it 'stays on new applications page and displays message when field(s) are incomplete' do
       visit '/applicants/new'
 
@@ -59,11 +58,9 @@ RSpec.describe 'applicants' do
       fill_in('Zipcode', with: '17105') # Leading zeroes are being truncated by number_field form
 
       click_button('Submit Application')
-      save_and_open_page
+
       expect(current_path).to eq('/applicants/new')
       expect(page).to have_content("Name can't be blank")
     end
-    
   end
-  
 end
