@@ -35,11 +35,7 @@ class Shelter < ApplicationRecord
     adoptable_pets.where('age >= ?', age_filter)
   end
 
-  def applications?
-    if pets.empty? == false
-      pets.each do |pet|
-        return name unless pet.pet_applications.empty?
-      end
-    end
+  def self.applications?
+    joins(pets: :applicants).distinct
   end
 end

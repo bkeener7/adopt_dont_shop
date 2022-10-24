@@ -17,10 +17,10 @@
   </div>
 <% end %>
 
-<h2>Shelters with Pending Applications</h2>
+<div id='shelters_with_apps'>
+  <h2>Shelters with Pending Applications</h2>
+    <% @shelters_with_apps.each do |shelter| %>
+      <h3><p> <%= shelter.name %> </p></h3>
+    <% end %>
+</div>
 
-<% @shelters.each do |shelter| %>
-  <div id="shelter-<%= shelter.id %>">
-    <h3><%= shelter.applications? %></h3>
-  </div>
-<% end %>
