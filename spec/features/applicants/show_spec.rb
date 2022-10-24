@@ -85,5 +85,11 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('Pending')
       expect(page).to_not have_content('Search pets to adopt:')
     end
+
+    it 'does not show sumbit application section when no pets are added' do
+      visit "/applicants/#{@applicant2.id}"
+
+      expect(page).to_not have_content('Why I Would Be a Good Pet Parent')
+      expect(page).to_not have_button('Submit Application')
   end
 end
