@@ -79,11 +79,11 @@ RSpec.describe 'applicants' do
       click_on('Search')
       click_on('Adopt Lobster!')
 
-      fill_in('Why Would I Be a Good Pet Parent', with: 'I love bats(and dogs)!')
+      fill_in('Why I Would Be a Good Pet Parent:', with: 'I love bats(and dogs)!')
       click_on('Submit Application')
 
       expect(page).to have_content('Pending')
-      expect(page).to_not have content('Search pets to adopt:')
+      expect(page).to_not have_content('Search pets to adopt:')
     end
   end
 end

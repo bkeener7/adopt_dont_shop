@@ -5,13 +5,15 @@
 <h3><%= @applicant.zipcode %></h3>
 <h3><%= @applicant.description %></h3>
 
-<%= form_with url: "/applicants/#{@applicant.id}", method: :get, local: true do |f| %>
-  <%= f.label :search, 'Search pets to adopt:' %>
-  <%= f.text_field :search %>
-  <%= f.submit 'Search' %>
+<% if @applicant.status == 'In Progress' %>
+  <%= form_with url: "/applicants/#{@applicant.id}", method: :get, local: true do |f| %>
+    <%= f.label :search, 'Search pets to adopt:' %>
+    <%= f.text_field :search %>
+    <%= f.submit 'Search' %>
+  <% end %>
 <% end %>
 
-<% if @pets != nil %>
+<% if @pets.present? %>
   <% @pets.each do |pet| %>
     <p>
       <form display = "inline-block">
@@ -26,9 +28,19 @@
   <% end %>
 <% end %>
 
+
 <h3>Pets I want to adopt:</h3>
 <% @applicant.pets.each do |pet| %>
   <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p></p>
+<% end %>
+
+<% if @applicant.pets.count > 0 %>
+  <%= form_with url: "/applicants/#{@applicant.id}", method: :patch, local: true do |form| %>
+  <%= form.label :description, 'Why I Would Be a Good Pet Parent:' %><br>
+  <%= form.text_area :description, size: "40x10" %><br>
+  <%= form.hidden_field :status, value: 'Pending' %>
+  <%= form.submit 'Submit Application' %>
+  <% end %>
 <% end %>
 
 <h3>Application Status: </h3> <p><%= @applicant.status %></p>
