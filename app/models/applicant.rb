@@ -10,7 +10,4 @@ class Applicant < ApplicationRecord
   def pet_count
     pets.count
   end
-  
 end
-
-
