@@ -4,6 +4,13 @@ class Applicant < ApplicationRecord
   validates :name, presence: true
   validates :city, presence: true
   validates :state, presence: true
-  validates :zipcode, presence: true
+  validates :zipcode, presence: true, numericality: true
   validates :status, presence: true
+
+  def pet_count
+    pets.count
+  end
+  
 end
+
+
