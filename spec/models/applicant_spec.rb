@@ -6,6 +6,7 @@ RSpec.describe Applicant, type: :model do
     it { should validate_presence_of :city }
     it { should validate_presence_of :state }
     it { should validate_presence_of :zipcode }
+    it { should validate_numericality_of :zipcode }
     it { should validate_presence_of :status }
   end
 
