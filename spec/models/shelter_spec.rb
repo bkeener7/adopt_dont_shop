@@ -21,12 +21,22 @@ RSpec.describe Shelter, type: :model do
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
+    @pet_5 = @shelter_2.pets.create(name: 'Mr. Bigglesworth', breed: 'persian', age: 9, adoptable: true)
+    @pet_6 = @shelter_3.pets.create(name: 'Toto', breed: 'cairn terrier', age: 10, adoptable: true)
+
+    @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
+    @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'In Progress')
+    @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
+
+    @pet_application1 = PetApplication.create!(pet: @pet_1, applicant: @applicant2)
+    @pet_application2 = PetApplication.create!(pet: @pet_3, applicant: @applicant2)
+    @pet_application3 = PetApplication.create!(pet: @pet_1, applicant: @applicant3)
   end
 
   describe 'class methods' do
     describe '#search' do
       it 'returns partial matches' do
-        expect(Shelter.search("Fancy")).to eq([@shelter_3])
+        expect(Shelter.search('Fancy')).to eq([@shelter_3])
       end
     end
 
@@ -65,6 +75,20 @@ RSpec.describe Shelter, type: :model do
     describe '.pet_count' do
       it 'returns the number of pets at the given shelter' do
         expect(@shelter_1.pet_count).to eq(3)
+      end
+    end
+
+    describe '.order_reverse_name' do
+      it 'orders the shelters by reverse name' do
+        expect(Shelter.order_reverse_name).to eq([@shelter_2, @shelter_3, @shelter_1])
+      end
+    end
+
+    describe '.applications?' do
+      it 'returns shelters with applications' do
+        expect(@shelter_1.applications?).to eq(@shelter_1.name)
+        expect(@shelter_2.applications?).to eq(nil)
+        expect(@shelter_3.applications?).to eq(@shelter_3.name)
       end
     end
   end

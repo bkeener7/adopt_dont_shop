@@ -22,6 +22,7 @@ class ApplicantsController < ApplicationController
 
     redirect_to "/applicants/#{applicant.id}"
   end
+
   private
 
   def applicant_params

@@ -31,5 +31,4 @@ RSpec.describe Applicant, type: :model do
       expect(applicant3.pet_count).to eq(1)
     end
   end
-
 end

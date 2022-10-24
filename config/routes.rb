@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # opening page
   get '/', to: 'application#welcome'
 
-  # pet applications
-  post '/pet_applications/add_pet', to: 'pet_applications#add_pet'
+  # admin shelters
+  get '/admin/shelters', to: 'admin_shelters#index'
 
   # applicants
   get '/applicants/new', to: 'applicants#new'
@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get '/pets/:id/edit', to: 'pets#edit'
   patch '/pets/:id', to: 'pets#update'
   delete '/pets/:id', to: 'pets#destroy'
+
+  # pet applications
+  post '/pet_applications/add_pet', to: 'pet_applications#add_pet'
 
   # veterinary offices
   get '/veterinary_offices', to: 'veterinary_offices#index'
