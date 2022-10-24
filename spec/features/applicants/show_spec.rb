@@ -7,7 +7,7 @@ RSpec.describe 'applicants' do
     @pet_2 = Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter.id)
     @pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Beethoven', shelter_id: @shelter.id)
     @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
-    @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'Pending')
+    @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'In Progress')
     @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
     @pet_application1 = PetApplication.create!(pet: @pet_1, applicant: @applicant2)
     @pet_application2 = PetApplication.create!(pet: @pet_3, applicant: @applicant2)
@@ -42,7 +42,7 @@ RSpec.describe 'applicants' do
     it 'shows the applicants status' do
       visit "/applicants/#{@applicant2.id}"
 
-      expect(page).to have_content('Pending')
+      expect(page).to have_content('In Progress')
     end
 
     it 'allows pets to be added by name to application before submitting' do
@@ -70,6 +70,20 @@ RSpec.describe 'applicants' do
       expect(current_path).to eq("/applicants/#{@applicant2.id}")
       expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
       expect('Lobster').to_not appear_before('Pets I want to adopt:')
+    end
+
+    it 'submits application and updates application status to "Pending"' do
+      visit "/applicants/#{@applicant2.id}"
+      
+      fill_in('Search', with: 'Lobster')
+      click_on('Search')
+      click_on('Adopt Lobster!')
+
+      fill_in('Why Would I Be a Good Pet Parent', with: 'I love bats(and dogs)!')
+      click_on('Submit Application')
+
+      expect(page).to have_content('Pending')
+      expect(page).to_not have content('Search pets to adopt:')
     end
   end
 end
