@@ -109,6 +109,7 @@ RSpec.describe 'applicants' do
       pet_6 = Pet.create!(adoptable: true, age: 4, breed: 'labrador retriever', name: 'LOBOMAN', shelter_id: shelter.id)
 
       visit "/applicants/#{@applicant2.id}"
+
       fill_in('Search', with: 'lOb')
       click_on('Search')
 

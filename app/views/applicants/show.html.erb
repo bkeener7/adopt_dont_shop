@@ -16,9 +16,9 @@
 <% if @pets.present? %>
   <% @pets.each do |pet| %>
     <p>
-      <form display = "inline-block">
-        <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
-        <%= form_tag "/pet_applications/add_pet", method: :post, local: true do %>
+     <form display="inline-block">
+      <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+        <%= form_with url: "/pet_applications/add_pet", method: :post, local: true do %>
           <%= hidden_field_tag :pet_id, pet.id %>
           <%= hidden_field_tag :applicant_id, @applicant.id %>
           <%= submit_tag "Adopt #{pet.name}!" %>
