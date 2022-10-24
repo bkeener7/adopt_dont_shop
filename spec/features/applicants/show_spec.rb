@@ -102,5 +102,20 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('Lobster')
       expect(page).to have_content('Lobo')
     end
+
+    it 'has a case insensitive pet names search' do
+      shelter = Shelter.create!(name: 'Boulder shelter', city: 'Boulder, CO', foster_program: false, rank: 9)
+      pet_5 = Pet.create!(adoptable: true, age: 2, breed: 'pekingese', name: 'Mr. LoBsTeR', shelter_id: shelter.id)
+      pet_6 = Pet.create!(adoptable: true, age: 4, breed: 'labrador retriever', name: 'LOBOMAN', shelter_id: shelter.id)
+
+      visit "/applicants/#{@applicant2.id}"
+      fill_in('Search', with: 'lOb')
+      click_on('Search')
+
+      expect(page).to have_content('Lobster')
+      expect(page).to have_content('Lobo')
+      expect(page).to have_content('Mr. LoBsTeR')
+      expect(page).to have_content('LOBOMAN')
+    end
   end
 end
