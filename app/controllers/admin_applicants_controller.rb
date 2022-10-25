@@ -1,6 +1,5 @@
 class AdminApplicantsController < ApplicationController
   def show
-    # @applicant = Applicant.find(params[:id])
     @pet_apps = Applicant.find(params[:id]).pet_applications
   end
 

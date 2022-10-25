@@ -43,7 +43,7 @@ RSpec.describe 'admin applicants' do
       within "#app_#{@pet_application1.id}" do
         click_on "Approve #{@pet_1.name}"
       end
-      save_and_open_page
+
       expect(current_path).to eq("/admin/applicants/#{@applicant2.id}")
 
       within "#app_#{@pet_application1.id}" do
@@ -52,7 +52,34 @@ RSpec.describe 'admin applicants' do
       end
     end
 
-    it 'has a reject button next to every pet applied for'
+    it 'has a reject button next to every pet applied for' do
+      visit "/admin/applicants/#{@applicant2.id}"
+
+      within "#app_#{@pet_application1.id}" do
+        expect(page).to have_content(@pet_1.name)
+        expect(page).to have_button("Reject #{@pet_1.name}")
+      end
+      
+      within "#app_#{@pet_application2.id}" do
+        expect(page).to have_content(@pet_3.name)
+        expect(page).to have_button("Reject #{@pet_3.name}")
+      end
+    end
+
+    it 'removes reject button and display "Rejected" when reject button is clicked' do
+      visit "/admin/applicants/#{@applicant2.id}"
+
+      within "#app_#{@pet_application1.id}" do
+        click_on "Reject #{@pet_1.name}"
+      end
+      
+      expect(current_path).to eq("/admin/applicants/#{@applicant2.id}")
+
+      within "#app_#{@pet_application1.id}" do
+        expect(page).to_not have_button("Reject #{@pet_1.name}")
+        expect(page).to have_content('Rejected')
+      end
+    end
 
     it 'can decision a pet application and will not affect the same pet on a different application'
     
