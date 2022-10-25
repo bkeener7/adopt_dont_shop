@@ -30,13 +30,13 @@ RSpec.describe 'admin applicants' do
         expect(page).to have_content(@pet_1.name)
         expect(page).to have_button("Approve #{@pet_1.name}")
       end
-      
+
       within "#app_#{@pet_application2.id}" do
         expect(page).to have_content(@pet_3.name)
         expect(page).to have_button("Approve #{@pet_3.name}")
       end
     end
-    
+
     it 'removes approve button and display "Approved" when approve button is clicked' do
       visit "/admin/applicants/#{@applicant2.id}"
 
@@ -59,7 +59,7 @@ RSpec.describe 'admin applicants' do
         expect(page).to have_content(@pet_1.name)
         expect(page).to have_button("Reject #{@pet_1.name}")
       end
-      
+
       within "#app_#{@pet_application2.id}" do
         expect(page).to have_content(@pet_3.name)
         expect(page).to have_button("Reject #{@pet_3.name}")
@@ -72,7 +72,7 @@ RSpec.describe 'admin applicants' do
       within "#app_#{@pet_application1.id}" do
         click_on "Reject #{@pet_1.name}"
       end
-      
+
       expect(current_path).to eq("/admin/applicants/#{@applicant2.id}")
 
       within "#app_#{@pet_application1.id}" do
