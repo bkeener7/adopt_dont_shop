@@ -26,14 +26,29 @@ RSpec.describe 'admin applicants' do
     it 'has an approve button next to every pet applied for' do
       visit "/admin/applicants/#{@applicant2.id}"
 
-      within "#pet_application#{@pet_1.id}" do
+      within "#app_#{@pet_application1.id}" do
         expect(page).to have_content(@pet_1.name)
-        expect(page).to have_content("Approve #{@pet_1.name}")
+        expect(page).to have_button("Approve #{@pet_1.name}")
       end
       
-      within "#pet_application#{@pet_2.id}" do
-        expect(page).to have_content(@pet_2.name)
-        expect(page).to have_content("Approve #{@pet_2.name}")
+      within "#app_#{@pet_application2.id}" do
+        expect(page).to have_content(@pet_3.name)
+        expect(page).to have_button("Approve #{@pet_3.name}")
+      end
+    end
+    
+    it 'removes approve button and display "Approved" when approve button is clicked' do
+      visit "/admin/applicants/#{@applicant2.id}"
+
+      within "#app_#{@pet_application1.id}" do
+        click_on "Approve #{@pet_1.name}"
+      end
+
+      expect(current_path).to eq("/admin/applicants/#{@applicant2.id}")
+
+      within "#app_#{@pet_application1.id}" do
+        expect(page).to_not have_button("Approve #{@pet_1.name}")
+        expect(page).to have_content('Approved')
       end
     end
 
