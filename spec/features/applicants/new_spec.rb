@@ -21,7 +21,7 @@ RSpec.describe 'applicants' do
       fill_in('Address', with: '1007 Mountain Drive')
       fill_in('City', with: 'Gotham')
       select('NJ - New Jersey', from: 'State')
-      fill_in('Zipcode', with: '17105') # Leading zeroes are being truncated by number_field form
+      fill_in('Zipcode', with: '07105')
 
       click_button('Submit Application')
 
@@ -32,7 +32,7 @@ RSpec.describe 'applicants' do
       expect(page).to have_content('1007 Mountain Drive')
       expect(page).to have_content('Gotham')
       expect(page).to have_content('New Jersey')
-      expect(page).to have_content('17105')
+      expect(page).to have_content('07105')
       expect(page).to have_content('In Progress')
     end
 
@@ -42,7 +42,7 @@ RSpec.describe 'applicants' do
       fill_in('Address', with: '1007 Mountain Drive')
       fill_in('City', with: 'Gotham')
       select('NJ - New Jersey', from: 'State')
-      fill_in('Zipcode', with: '17105') # Leading zeroes are being truncated by number_field form
+      fill_in('Zipcode', with: '07105')
 
       click_button('Submit Application')
 
