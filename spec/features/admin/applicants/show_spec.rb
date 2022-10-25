@@ -81,8 +81,20 @@ RSpec.describe 'admin applicants' do
       end
     end
 
-    it 'can decision a pet application and will not affect the same pet on a different application'
-    
-  end
+    it 'can decision a pet application and will not affect the same pet on a different application' do
+      visit "/admin/applicants/#{@applicant2.id}"
 
+      within "#app_#{@pet_application1.id}" do
+        click_on "Reject #{@pet_1.name}"
+      end
+
+      visit "/admin/applicants/#{@applicant3.id}"
+
+      within "#app_#{@pet_application3.id}" do
+        expect(page).to have_content(@pet_1.name)
+        expect(page).to have_button("Approve #{@pet_1.name}")
+        expect(page).to have_button("Reject #{@pet_1.name}")
+      end
+    end
+  end
 end
