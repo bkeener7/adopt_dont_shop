@@ -86,9 +86,7 @@ RSpec.describe Shelter, type: :model do
 
     describe '.applications?' do
       it 'returns shelters with applications' do
-        expect(@shelter_1.applications?).to eq(@shelter_1.name)
-        expect(@shelter_2.applications?).to eq(nil)
-        expect(@shelter_3.applications?).to eq(@shelter_3.name)
+        expect(Shelter.applications?).to include(@shelter_1, @shelter_3)
       end
     end
   end
