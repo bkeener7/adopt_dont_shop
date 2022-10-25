@@ -43,7 +43,7 @@ RSpec.describe 'admin applicants' do
       within "#app_#{@pet_application1.id}" do
         click_on "Approve #{@pet_1.name}"
       end
-
+      save_and_open_page
       expect(current_path).to eq("/admin/applicants/#{@applicant2.id}")
 
       within "#app_#{@pet_application1.id}" do

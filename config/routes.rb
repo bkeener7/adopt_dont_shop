@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # opening page
   get '/', to: 'application#welcome'
 
+  # admin applicants
+  get '/admin/applicants/:id', to: 'admin_applicants#show'
+  patch '/admin/applicants/:id', to: 'admin_applicants#update'
+
   # admin shelters
   get '/admin/shelters', to: 'admin_shelters#index'
 

@@ -1,0 +1,15 @@
+<h1>Admin Applicants Page</h1>
+
+<% @pet_apps.each do |app| %>
+  <div id="app_<%= app.id %>">
+    <p><%= app.pet_name %>:
+      <% if app.application_status == "Pending" %>
+        <%= button_to "Approve #{app.pet_name}", "/admin/applicants/#{app.applicant_id}", method: :patch, params: { application_status: "Approved", app_id: app.id } %>
+      <% else %>
+        <%= app.application_status %>
+      <% end %>
+    </p>
+  </div>
+<% end %>
+
+
