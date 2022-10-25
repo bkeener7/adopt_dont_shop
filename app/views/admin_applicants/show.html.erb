@@ -5,6 +5,7 @@
     <p><%= app.pet_name %>:
       <% if app.application_status == "Pending" %>
         <%= button_to "Approve #{app.pet_name}", "/admin/applicants/#{app.applicant_id}", method: :patch, params: { application_status: "Approved", app_id: app.id } %>
+        <%= button_to "Reject #{app.pet_name}", "/admin/applicants/#{app.applicant_id}", method: :patch, params: { application_status: "Rejected", app_id: app.id } %>
       <% else %>
         <%= app.application_status %>
       <% end %>
