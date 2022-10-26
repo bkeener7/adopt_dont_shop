@@ -12,9 +12,9 @@ RSpec.describe 'the applicants index' do
     @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
     @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'In Progress')
     @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
-    PetApplication.create!(pet: @pet_1, applicant: @applicant2)
-    PetApplication.create!(pet: @pet_3, applicant: @applicant2)
-    PetApplication.create!(pet: @pet_1, applicant: @applicant3)
+    PetApplication.create!(applicant_id: @applicant2.id, pet_id: @pet_1.id)
+    PetApplication.create!(applicant_id: @applicant2.id, pet_id: @pet_3.id)
+    PetApplication.create!(applicant_id: @applicant3.id, pet_id: @pet_1.id)
   end
 
   it 'shows all current applicants with links to their applicant page' do
