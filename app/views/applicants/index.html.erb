@@ -1,0 +1,6 @@
+<h1>All Applicants</h1>
+
+<% @applicants.each do |applicant| %>
+    <p><b><%= link_to "#{applicant.name}", "/applicants/#{applicant.id}" %></b>
+    Application status: <%= applicant.status %></p>
+<% end%>

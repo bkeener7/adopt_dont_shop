@@ -1,4 +1,8 @@
 class ApplicantsController < ApplicationController
+  def index
+    @applicants = Applicant.all
+  end
+
   def show
     @pets = Pet.search(params[:search]) if params[:search].present?
     @applicant = Applicant.find(params[:id])

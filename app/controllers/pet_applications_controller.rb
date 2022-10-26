@@ -1,8 +1,12 @@
 class PetApplicationsController < ApplicationController
   def add_pet
-    new_pet = Pet.find(params[:pet_id])
-    existing_applicant = Applicant.find(params[:applicant_id])
-    PetApplication.create!(pet: new_pet, applicant: existing_applicant)
-    redirect_to("/applicants/#{existing_applicant.id}")
+    PetApplication.create!(pet_application_params)
+    redirect_to("/applicants/#{PetApplication.last.applicant_id}")
+  end
+
+  private
+
+  def pet_application_params
+    params.permit(:applicant_id, :pet_id)
   end
 end

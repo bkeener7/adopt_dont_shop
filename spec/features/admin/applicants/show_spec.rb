@@ -10,18 +10,11 @@ RSpec.describe 'admin applicants' do
     @applicant1 = Applicant.create!(name: 'Diana Prince', address: '5 Champ de Mars Ave', city: 'Denver', state: 'Colorado', zipcode: 80202, description: 'I love dogs!', status: 'In Progress')
     @applicant2 = Applicant.create!(name: 'Bruce Wayne', address: '1007 Mountain Drive', city: 'Gotham', state: 'New Jersey', zipcode: 07105, description: 'I love bats(and dogs)!', status: 'In Progress')
     @applicant3 = Applicant.create!(name: 'Hughie Campbell', address: '175 Vought Ave', city: 'New York City', state: 'New York', zipcode: 10282, description: 'Cats rule!', status: 'Pending')
-    @pet_application1 = PetApplication.create!(pet: @pet_1, applicant: @applicant2)
-    @pet_application2 = PetApplication.create!(pet: @pet_3, applicant: @applicant2)
-    @pet_application3 = PetApplication.create!(pet: @pet_1, applicant: @applicant3)
+    @pet_application1 = PetApplication.create!(applicant_id: @applicant2.id, pet_id: @pet_1.id)
+    @pet_application2 = PetApplication.create!(applicant_id: @applicant2.id, pet_id: @pet_3.id)
+    @pet_application3 = PetApplication.create!(applicant_id: @applicant3.id, pet_id: @pet_1.id)
   end
 
-  # As a visitor
-  # When I visit an admin application show page ('/admin/applications/:id')
-  # For every pet that the application is for, I see a button to approve the application for that specific pet
-  # When I click that button
-  # Then I'm taken back to the admin application show page
-  # And next to the pet that I approved, I do not see a button to approve this pet
-  # And instead I see an indicator next to the pet that they have been approved
   describe 'show page' do
     it 'has an approve button next to every pet applied for' do
       visit "/admin/applicants/#{@applicant2.id}"

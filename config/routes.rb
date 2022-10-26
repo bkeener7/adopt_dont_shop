@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/admin/shelters', to: 'admin_shelters#index'
 
   # applicants
+  get '/applicants', to: 'applicants#index'
   get '/applicants/new', to: 'applicants#new'
   get '/applicants/:id', to: 'applicants#show'
   post '/applicants', to: 'applicants#create'
