@@ -18,13 +18,14 @@ RSpec.describe 'applicants' do
   describe 'applicants show page' do
     it 'shows the information of the applicant' do
       visit "/applicants/#{@applicant2.id}"
-
-      expect(page).to have_content('Bruce Wayne')
-      expect(page).to have_content('1007 Mountain Drive')
-      expect(page).to have_content('Gotham')
-      expect(page).to have_content('New Jersey')
-      expect(page).to have_content('07105')
-      expect(page).to have_content('I love bats(and dogs)!')
+      within '#applicant_' do
+        expect(page).to have_content('Bruce Wayne')
+        expect(page).to have_content('1007 Mountain Drive')
+        expect(page).to have_content('Gotham')
+        expect(page).to have_content('New Jersey')
+        expect(page).to have_content('07105')
+        expect(page).to have_content('I love bats(and dogs)!')
+      end
 
       expect(page).to_not have_content('Diana Prince')
       expect(page).to_not have_content('Hughie Campbell')
@@ -33,30 +34,38 @@ RSpec.describe 'applicants' do
     it 'shows the names of all pets applicant applied for with links to their show page' do
       visit "/applicants/#{@applicant2.id}"
 
-      expect(page).to have_content('Lucille Bald')
-      expect(page).to have_content('Beethoven')
+      within '#pets_applied_for' do
+        expect(page).to have_content('Lucille Bald')
+        expect(page).to have_content('Beethoven')
 
-      expect(page).to have_link(@pet_1.name, href: "/pets/#{@pet_1.id}")
-      expect(page).to have_link(@pet_3.name, href: "/pets/#{@pet_3.id}")
+        expect(page).to have_link(@pet_1.name, href: "/pets/#{@pet_1.id}")
+        expect(page).to have_link(@pet_3.name, href: "/pets/#{@pet_3.id}")
+      end
     end
 
     it 'shows the applicants status' do
       visit "/applicants/#{@applicant2.id}"
 
-      expect(page).to have_content('In Progress')
+      within '#app_status' do
+        expect(page).to have_content('In Progress')
+      end
     end
 
     it 'allows pets to be added by name to application before submitting' do
       visit "/applicants/#{@applicant2.id}"
 
-      expect(page).to have_button('Search')
-      expect(page).to_not have_content('Lobster')
+      within '#search_pets' do
+        expect(page).to have_button('Search')
+        expect(page).to_not have_content('Lobster')
+      end
 
       fill_in('Search', with: 'Lobster')
       click_on('Search')
 
-      expect(current_path).to eq("/applicants/#{@applicant2.id}")
-      expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+      within '#pet_search_result' do
+        expect(current_path).to eq("/applicants/#{@applicant2.id}")
+        expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+      end
     end
 
     it 'shows an adopt this pet button on searched pets that adds to want to adopt on application' do
@@ -67,12 +76,16 @@ RSpec.describe 'applicants' do
       fill_in('Search', with: 'Lobster')
       click_on('Search')
 
-      expect(page).to have_button('Adopt Lobster!')
+      within '#pet_search_result' do
+        expect(page).to have_button('Adopt Lobster!')
+      end
 
       click_on('Adopt Lobster!')
 
       expect(current_path).to eq("/applicants/#{new_applicant.id}")
-      expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+      within '#pets_applied_for' do
+        expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
+      end
       expect(@pet_2.name).to_not appear_before('Pets I want to adopt:')
     end
 
@@ -86,15 +99,19 @@ RSpec.describe 'applicants' do
       fill_in('Why I Would Be a Good Pet Parent:', with: 'I love bats(and dogs)!')
       click_on('Submit Application')
 
-      expect(page).to have_content('Pending')
+      within '#app_status' do
+        expect(page).to have_content('Pending')
+      end
       expect(page).to_not have_content('Search pets to adopt:')
     end
 
     it 'does not show submit application section when no pets are added' do
       visit "/applicants/#{@applicant1.id}"
 
-      expect(page).to_not have_content('Why I Would Be a Good Pet Parent')
-      expect(page).to_not have_button('Submit Application')
+      within '#application_submit' do
+        expect(page).to_not have_content('Why I Would Be a Good Pet Parent')
+        expect(page).to_not have_button('Submit Application')
+      end
     end
 
     it 'returns partial matches on pet names search' do
@@ -102,8 +119,10 @@ RSpec.describe 'applicants' do
       fill_in('Search', with: 'Lob')
       click_on('Search')
 
-      expect(page).to have_content('Lobster')
-      expect(page).to have_content('Lobo')
+      within '#pet_search_result' do
+        expect(page).to have_content('Lobster')
+        expect(page).to have_content('Lobo')
+      end
     end
 
     it 'has a case insensitive pet names search' do
@@ -116,10 +135,12 @@ RSpec.describe 'applicants' do
       fill_in('Search', with: 'lOb')
       click_on('Search')
 
-      expect(page).to have_content('Lobster')
-      expect(page).to have_content('Lobo')
-      expect(page).to have_content('Mr. LoBsTeR')
-      expect(page).to have_content('LOBOMAN')
+      within '#pet_search_result' do
+        expect(page).to have_content('Lobster')
+        expect(page).to have_content('Lobo')
+        expect(page).to have_content('Mr. LoBsTeR')
+        expect(page).to have_content('LOBOMAN')
+      end
     end
   end
 end

@@ -20,15 +20,17 @@ RSpec.describe 'the shelters index' do
   it 'sees all shelters in the system listed in reverse alphabetical order' do
     visit '/admin/shelters'
 
-    expect(@shelter_2.name).to appear_before(@shelter_3.name)
-    expect(@shelter_3.name).to appear_before(@shelter_1.name)
-    expect(@shelter_1.name).to_not appear_before(@shelter_2.name)
+    within '#shelter_' do
+      expect(@shelter_2.name).to appear_before(@shelter_3.name)
+      expect(@shelter_3.name).to appear_before(@shelter_1.name)
+      expect(@shelter_1.name).to_not appear_before(@shelter_2.name)
+    end
   end
 
   it 'sees a section for shelters with the name of every shelter that has a pending application' do
     visit '/admin/shelters'
 
-    within('div#shelters_with_apps') do
+    within '#shelters_with_apps' do
       expect(page).to have_content('Aurora shelter')
       expect(page).to have_content('Fancy pets of Colorado')
       expect(page).to_not have_content('RGV animal shelter')

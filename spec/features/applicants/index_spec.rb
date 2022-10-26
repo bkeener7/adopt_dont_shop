@@ -19,14 +19,14 @@ RSpec.describe 'the applicants index' do
 
   it 'shows all current applicants with links to their applicant page' do
     visit '/applicants'
-
-    expect(page).to have_link(@applicant1.name)
-    expect(page).to have_link(@applicant2.name)
-    expect(page).to have_link(@applicant3.name)
-    expect(page).to have_content(@applicant1.status)
-    expect(page).to have_content(@applicant2.status)
-    expect(page).to have_content(@applicant3.status)
-
+    within '#applicants_' do
+      expect(page).to have_link(@applicant1.name)
+      expect(page).to have_link(@applicant2.name)
+      expect(page).to have_link(@applicant3.name)
+      expect(page).to have_content(@applicant1.status)
+      expect(page).to have_content(@applicant2.status)
+      expect(page).to have_content(@applicant3.status)
+    end
     click_on @applicant1.name
 
     expect(current_path).to eq("/applicants/#{@applicant1.id}")
