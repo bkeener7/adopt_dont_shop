@@ -11,7 +11,4 @@ class Applicant < ApplicationRecord
     pets.count
   end
 
-  def self.pet_applications
-    pet_applications
-  end
 end
