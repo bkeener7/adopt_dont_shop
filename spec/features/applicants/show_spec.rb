@@ -60,7 +60,10 @@ RSpec.describe 'applicants' do
     end
 
     it 'shows an adopt this pet button on searched pets that adds to want to adopt on application' do
-      visit "/applicants/#{@applicant2.id}"
+      new_applicant = Applicant.create!(name: 'Sad Frank', address: '123 The Slums', city: 'Old London', state: 'Maryland', zipcode: '01874', description: 'Dogs are the best!', status: 'In Progress')
+      visit "/applicants/#{new_applicant.id}"
+      expect(page).to_not have_content('Lobster')
+
       fill_in('Search', with: 'Lobster')
       click_on('Search')
 
@@ -68,9 +71,9 @@ RSpec.describe 'applicants' do
 
       click_on('Adopt Lobster!')
 
-      expect(current_path).to eq("/applicants/#{@applicant2.id}")
+      expect(current_path).to eq("/applicants/#{new_applicant.id}")
       expect(page).to have_link('Lobster', href: "/pets/#{@pet_2.id}")
-      expect('Lobster').to_not appear_before('Pets I want to adopt:')
+      expect(@pet_2.name).to_not appear_before('Pets I want to adopt:')
     end
 
     it 'submits application and updates application status to "Pending"' do
@@ -87,7 +90,7 @@ RSpec.describe 'applicants' do
       expect(page).to_not have_content('Search pets to adopt:')
     end
 
-    it 'does not show sumbit application section when no pets are added' do
+    it 'does not show submit application section when no pets are added' do
       visit "/applicants/#{@applicant1.id}"
 
       expect(page).to_not have_content('Why I Would Be a Good Pet Parent')

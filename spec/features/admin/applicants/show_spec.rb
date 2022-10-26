@@ -15,13 +15,6 @@ RSpec.describe 'admin applicants' do
     @pet_application3 = PetApplication.create!(pet: @pet_1, applicant: @applicant3)
   end
 
-  # As a visitor
-  # When I visit an admin application show page ('/admin/applications/:id')
-  # For every pet that the application is for, I see a button to approve the application for that specific pet
-  # When I click that button
-  # Then I'm taken back to the admin application show page
-  # And next to the pet that I approved, I do not see a button to approve this pet
-  # And instead I see an indicator next to the pet that they have been approved
   describe 'show page' do
     it 'has an approve button next to every pet applied for' do
       visit "/admin/applicants/#{@applicant2.id}"
